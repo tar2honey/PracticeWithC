@@ -6,6 +6,7 @@
 int main()
 {
 	printf("Welcome to C again.");
+	printf("Welcome to C++ again.");
 	_getch();
     return 0;
 }
