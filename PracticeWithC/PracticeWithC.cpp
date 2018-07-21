@@ -134,6 +134,7 @@ void traverse(node* head, callback f)
 		f(cursor);
 		cursor = cursor->next;
 	}
+	printf("null");
 }
 /*
 remove node from the front of list
@@ -220,7 +221,10 @@ display a node
 void display(node* n)
 {
 	if (n != NULL)
-		printf("%d ", n->data);
+		//printf("%d ", n->data);
+		printf("%d-->", n->data);
+	else
+		printf("NULL");
 }
 
 /*
@@ -339,6 +343,7 @@ display the menu
 */
 void menu()
 {
+	printf("\n11.Create Subset from a Set\n");
 	printf("--- C Linked List Demonstration --- \n\n");
 	printf("0.menu\n");
 	printf("1.prepend an element\n");
@@ -351,7 +356,105 @@ void menu()
 	printf("8.remove any node\n");
 	printf("9.sort the list\n");
 	printf("10.Reverse the linked list\n");
+	printf("12.Check if linked list is palindrome\n");
 	printf("-1.quit\n");
+}
+
+char string[50], n;
+void subset(int, int, int);
+
+void subset(int start, int index, int num_sub)
+{
+	int i, j;
+	if (index - start + 1 == num_sub)
+	{
+		if (num_sub == 1)
+		{
+			for (i = 0; i < n; i++)
+				printf("%c\n", string[i]);
+		}
+		else
+		{
+			for (j = index; j < n; j++)
+			{
+				for (i = start; i < index; i++)
+					printf("%c", string[i]);
+				printf("%c\n", string[j]);
+			}
+			if (start != n - num_sub)
+				subset(start + 1, start + 1, num_sub);
+		}
+	}
+	else
+	{
+		subset(start, index + 1, num_sub);
+	}
+}
+
+void showNode()
+{
+	int val = 2;
+	printf("\n| %d ||-->", val);
+}
+
+/*
+check if palindrome linked list
+*/
+bool isPalindrome(node* head)
+{
+	node* temp = head;
+	int listLength = 1;
+	while (temp->next != NULL)
+	{
+		temp = temp->next;
+		listLength++;
+	}
+
+	int midL = 0;
+	int m = listLength % 2;
+	int d = listLength / 2;
+	if (m == 0)
+		midL = d;
+	else
+		midL = d + 1;
+
+	//temp = head;
+	node* midH = head;
+	int i = 1;
+	while (i <= midL)
+	{
+		midH = midH->next;
+		i++;
+	}
+	//return midH;
+
+	node* prev = NULL;
+	node* current = midH;
+	node* next;
+	while (current != NULL && temp != NULL)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	midH = prev;
+	//return midH;
+
+	temp = head;
+	while (temp->next != NULL && midH->next != NULL)
+	{
+		if (temp->data != midH->data)
+			return false;
+		else
+		{
+			temp = temp->next;
+			midH = midH->next;
+		}
+	}
+
+	return true;
+	//return head;
 }
 
 int main()
@@ -471,10 +574,25 @@ int main()
 			if (head != NULL)
 				traverse(head, disp);
 			break;
+		case 11:
+			int i, len;
+			printf("Enter the len of main set : ");
+			scanf_s("%d", &len);
+			printf("Enter the elements of main set : ");
+			scanf_s("%s", string, sizeof(string));
+			n = len;
+			printf("The subsets are :\n");
+			for (i = 1; i <= n; i++)
+				subset(0, 0, i);
+			break;
+		case 12:
+			if (isPalindrome(head))
+				printf("List is palindrome.");
+			else
+				printf("List is not palindrome.");
+			break;
 		}
-
 	}
 	dispose(head);
 	return 0;
 }
-

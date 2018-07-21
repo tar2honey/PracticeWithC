@@ -240,3 +240,7 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/PracticeWithC/SubsetProblems.h
+/PracticeWithC/SubsetProblems.cpp
+/PracticeWithC/resource.h
+/PracticeWithC/PracticeWithC.rc
